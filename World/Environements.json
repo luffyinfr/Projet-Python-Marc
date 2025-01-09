@@ -1,0 +1,30 @@
+{
+    "Village": {
+        "AdjacentEnvironements": [
+            "Forest"
+        ],
+        "Actors": [
+            "Hero",
+            "Vendor"
+        ]
+    },
+    "Forest": {
+        "AdjacentEnvironements": [
+            "Beach",
+            "Village"
+        ],
+        "Actors": [
+            "Bunny",
+            "Druid"
+        ]
+    },
+    "Beach": {
+        "AdjacentEnvironements": [
+            "Forest"
+        ],
+        "Actors": [
+            "Villain",
+            "Fish"
+        ]
+    }
+}

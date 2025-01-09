@@ -1,0 +1,9 @@
+{
+    "InventoryA": {
+        "ItemA": 1,
+        "ItemB": 1
+    },
+    "InventoryB": {
+        "ItemB": 2
+    }
+}

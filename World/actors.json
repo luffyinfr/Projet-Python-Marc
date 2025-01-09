@@ -1,0 +1,22 @@
+{
+    "Hero": {
+        "Inventory":"InventoryA",
+        "Health": 100,
+        "Attack": 15
+    },
+    "Villain": {
+        "Inventory":"InventoryA",
+        "Health": 120,
+        "Attack": 20
+    },
+    "Druid": {
+        "Inventory":"InventoryA",
+        "Health": 100,
+        "Attack": 10
+    },
+    "Bunny": {
+        "Inventory":"InventoryA",
+        "Health": 10,
+        "Attack": 1
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "ItemA": {
+        "name": "Sword of Destiny",
+        "damage": 50
+    },
+    "ItemB": {
+        "name": "Health Potion",
+        "healing": 25
+    }
+}
