@@ -5,6 +5,8 @@ from Inventory import*
 from Item import*
 from enum import Enum
 import copy
+import Utils
+from CombatInterface import*
 
 class GameState(Enum):
     Roaming = 1
@@ -28,6 +30,7 @@ class Game:
             self.ActorManager = ActorManager()
             self.EnvironementManager = EnvironementManager()
             self.EnvironementManager.loadNpcRefs()
+            self.CombatInterface = CombatInterface()
             self.ActiveEnvironement = self.EnvironementManager.GetEnvironement("Forest")
             self.PlayerActor : Actor = copy.deepcopy(self.ActorManager.GetActor("Hero"))
             self.GameState = GameState.Roaming
@@ -38,7 +41,9 @@ class Game:
            #print("\n\n\n\n\n\n\n\n\n\n\n\n")
            #self.ActiveEnvironement.DisplayInfo()
            command = str(input("Enter command. Type \"help\" for available commands "))
-           self.ProcessCommands(command)
+           if command == "exit":
+               break
+           self.ProcessCommands(command.lower())
 
     def DisplayCommands(self):
         print(f"{GREEN}help{RESET} - Displays a list of commands available in the current context")
@@ -48,14 +53,40 @@ class Game:
 
     def ChangeEnvironement(self, environement : Environement):
         self.ActiveEnvironement = environement
+        environement.DisplayInfo()
 
     def ProcessCommands(self, command : str):
-        match command:
-               case "help":
-                   self.DisplayCommands()
-                   return
-        if self.ActiveEnvironement.ProcessCommand(command):
-            return
+        split_command = command.split(" ")
+        match split_command[0]:
+            case "help":
+                self.DisplayCommands()
+                return
+            case "info":
+                itemName = Utils.JoinWordList(split_command[1:len(split_command)])
+                if self.ItemManager.PrintInfo(itemName):
+                    return
+        match self.GameState:
+            case GameState.Roaming:
+                if self.ProcessRoamingCommands(command):
+                    return
+            case GameState.Battling:
+                if self.ProcessBattlingCommands(command):
+                    return
+            case GameState.Talking:
+                if self.ProcessTalkingCommands(command):
+                    return
         if self.PlayerActor.ProcessCommand(command):
             return
         print(f"command \"{command}\" not recognised")
+
+    def ProcessRoamingCommands(self, command : str):
+        if self.ActiveEnvironement.ProcessCommand(command):
+            return
+        
+    def ProcessBattlingCommands(self, command : str):
+        CombatInterface._instance.ProcessCommands(command)
+
+    def ProcessTalkingCommands(self, command : str):
+        pass
+    def SetState(self, state : GameState):
+        self.GameState = state

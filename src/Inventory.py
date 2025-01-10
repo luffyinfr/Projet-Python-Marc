@@ -1,4 +1,5 @@
 import json
+import Utils
 from Item import *
 
 # ANSI color codes
@@ -11,7 +12,7 @@ RESET = "\033[0m"
 class Inventory:
     def __init__(self, name : str):
         self.name = name
-        self.itemList = []
+        self.itemList = {}
         self.Owner : Actor = None
         self.load(name)
 
@@ -33,7 +34,7 @@ class Inventory:
                 for item in inventory_data:
                     itemClass = itemManager.GetItem(item)
                     if(itemClass):
-                        self.itemList.append(itemClass)
+                        self.itemList[itemClass.name.lower()] = itemClass
             else:
                 print(f"Inventory '{name}' not found in the JSON file.")
         except FileNotFoundError:
@@ -47,21 +48,31 @@ class Inventory:
         print(f"{GREEN}Inventory info [Item]{RESET} - Displays info for the given item if available")
 
     def ProcessCommand(self, command : str):
-        if command.lower() == "inventory":
+        if command == "inventory":
             print(self)
             return True
         split_command = command.split(" ")
-        match split_command[0].lower():
-            case "use":
-                if(split_command[0] in self.itemList):
-                    self.itemList[split_command[0]].Use(self.Owner)
+        if split_command[0] == "inventory":
+            item = Utils.JoinWordList(split_command[2:len(split_command)])
+            match split_command[1]:
+                case "use":
+                    if(item in (key.lower() for key in self.itemList.keys())):
+                        self.itemList[item].Use(self.Owner)
+                        self.itemList.pop("item")
+                        print(f"Used the {YELLOW}{item}{RESET}")
+                        return True
+                    print(f"{RED}There is no item named {item} in the inventory {RESET}")
                     return True
-            case "info":
-                if(split_command[0] in self.itemList):
-                    print(self.itemList[split_command[0]])
+                case "info":
+                    if(item in (key.lower() for key in self.itemList.keys())):
+                        print(self.itemList[item])
+                        self.itemList.pop("item")
+                        return True
+                    print(f"{RED}There is no item named {item} in the inventory {RESET}")
                     return True
         return False
-                
+
+    
 
 class InventoryManager:
     # singleton pattern

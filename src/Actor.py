@@ -3,15 +3,16 @@ from Inventory import *
 
 class Actor:
     def __init__(self, name : str):
-        self.name = name
+        self.Name = name
         self.Health = 0
         self.MaxHealth = 0
         self.Attack = 0
+        self.Defense : float = 0
         self.inventory = None
         self.load(name)
 
     def __str__(self):
-        return f"{self.name}({self.Health},{self.Attack})"
+        return f"{self.Name}({self.Health},{self.Attack})"
 
 
 
@@ -28,6 +29,7 @@ class Actor:
                 self.Health = actor_data.get("Health", 0)  # Default to 0 if not found
                 self.MaxHealth = self.Health
                 self.Attack = actor_data.get("Attack", 0)  # Default to 0 if not found
+                self.Defense = actor_data.get("Defense", 0)  # Default to 0 if not found
             else:
                 print(f"Actor '{name}' not found in the JSON file.")
         except FileNotFoundError:

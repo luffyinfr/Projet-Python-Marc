@@ -1,5 +1,6 @@
 import json
 from Actor import *
+from CombatInterface import *
 
 # ANSI color codes
 RED = "\033[31m"
@@ -73,9 +74,10 @@ class Environement:
             print(adjacentText)
 
     def ProcessCommand(self, command : str):
-        if command == "environement info":
-            self.DisplayInfo()
-            return True
+        match command:
+            case "environement info":
+                self.DisplayInfo()
+                return True
         split_command = command.split(" ")
         match split_command[0]:
             case "move":
@@ -84,23 +86,39 @@ class Environement:
                 print(f"{RED}Command Not Implemented Yet!{RESET}")
                 return False
             case "attack":
-                print(f"{RED}Command Not Implemented Yet!{RESET}")
-                return False
+                npc = self.FindNPC(split_command[1])
+                if npc:
+                    from Game import Game, GameState
+                    CombatInterface._instance.InitCombat(Game._instance.PlayerActor, npc)
+                    return True
+                print(f"{RED}NPC {split_command[1]} not found{RESET}")
+                return True
         return False
 
     def DisplayCommands(self):
         print(f"{GREEN}environement info{RESET} - Displays the environement's information")
         print(f"{GREEN}move [location]{RESET} - Moves to the specified location if it is available")
         print(f"{GREEN}talk [npc]{RESET} - Talks to the specified NPC {RED}NOT IMPLEMENTED YET{RESET}")
-        print(f"{GREEN}attack [npc]{RESET} - Attacks the specified NPC {RED}NOT IMPLEMENTED YET{RESET}")
+        print(f"{GREEN}attack [npc]{RESET} - Attacks the specified NPC")
 
     def FindEnvironement(self, envName):
         for env in self.AdjacentEnvironements:
-            if env == envName:
+            if env.lower() == envName:
                 from Game import Game
                 Game._instance.ChangeEnvironement(self.AdjacentEnvironements[env])
                 return True
         return False
+    
+    def FindNPC(self, npcName):
+        for npc in self.NPCs:
+            if npc.lower() == npcName:
+                return self.NPCs[npc]
+        return None
+
+    def RemoveNPC(self, npcName):
+        if npcName.lower() in map(str.lower, self.NPCs.keys()):
+            self.NPCs.pop(npcName)
+            return True
 
 class EnvironementManager:
     # singleton pattern

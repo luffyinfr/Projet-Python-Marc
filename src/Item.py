@@ -80,6 +80,13 @@ class ItemManager:
             print(self.Items[item])
         return f""
 
+    def PrintInfo(self, itemName : str):
+        for item in self.Items:
+            if self.Items[item].name.lower() == itemName.lower():
+                print(self.Items[item])
+                return True
+        return False
+
     def load(self):
         try:
             with open("World\\items.json", "r") as file:
