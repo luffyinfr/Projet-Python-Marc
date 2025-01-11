@@ -69,15 +69,12 @@ class Game:
             case GameState.Roaming:
                 if self.ProcessRoamingCommands(command):
                     return
-            case GameState.Battling:
-                if self.ProcessBattlingCommands(command):
-                    return
             case GameState.Talking:
                 if self.ProcessTalkingCommands(command):
                     return
         if self.PlayerActor.ProcessCommand(command):
             return
-        print(f"command \"{command}\" not recognised")
+        #print(f"command \"{command}\" not recognised")
 
     def ProcessRoamingCommands(self, command : str):
         if self.ActiveEnvironement.ProcessCommand(command):

@@ -19,7 +19,7 @@ class Inventory:
     def __str__(self):
         print(f"Inventory {self.name}:")
         for item in self.itemList:
-            print(item.name)
+            print(item)
         return f""
 
     def load(self, name : str):
@@ -50,7 +50,7 @@ class Inventory:
     def ProcessCommand(self, command : str):
         if command == "inventory":
             print(self)
-            return True
+            return False
         split_command = command.split(" ")
         if split_command[0] == "inventory":
             item = Utils.JoinWordList(split_command[2:len(split_command)])
@@ -58,18 +58,18 @@ class Inventory:
                 case "use":
                     if(item in (key.lower() for key in self.itemList.keys())):
                         self.itemList[item].Use(self.Owner)
-                        self.itemList.pop("item")
+                        self.itemList.pop(item)
                         print(f"Used the {YELLOW}{item}{RESET}")
                         return True
                     print(f"{RED}There is no item named {item} in the inventory {RESET}")
-                    return True
+                    return False
                 case "info":
                     if(item in (key.lower() for key in self.itemList.keys())):
                         print(self.itemList[item])
                         self.itemList.pop("item")
                         return True
                     print(f"{RED}There is no item named {item} in the inventory {RESET}")
-                    return True
+                    return False
         return False
 
     

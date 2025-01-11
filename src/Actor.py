@@ -1,5 +1,6 @@
 import json
 from Inventory import *
+import copy
 
 class Actor:
     def __init__(self, name : str):
@@ -24,7 +25,8 @@ class Actor:
             # Find the actor by name
             actor_data = data.get(name)
             if actor_data:
-                self.inventory = InventoryManager._instance.GetInventory(actor_data.get("Inventory"))
+                self.name = name
+                self.inventory = copy.deepcopy(InventoryManager._instance.GetInventory(actor_data.get("Inventory")))
                 self.inventory.Owner = self
                 self.Health = actor_data.get("Health", 0)  # Default to 0 if not found
                 self.MaxHealth = self.Health

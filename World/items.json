@@ -1,9 +1,9 @@
 {
-    "ItemA": {
+    "AttackItem": {
         "name": "Sword of Destiny",
         "damage": 50
     },
-    "ItemB": {
+    "HealItem": {
         "name": "Health Potion",
         "healing": 25
     }

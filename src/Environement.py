@@ -1,6 +1,7 @@
 import json
 from Actor import *
 from CombatInterface import *
+import copy
 
 # ANSI color codes
 RED = "\033[31m"
@@ -16,7 +17,8 @@ class Environement:
         self.NPCs = {}
 
     def __str__(self):
-        return f"{self.name}({self.Health},{self.Attack})"
+        self.DisplayInfo()
+        return f""
 
 
     def loadNPCs(self): #assign the NPC references
@@ -29,7 +31,7 @@ class Environement:
                 npc_data = env_data.get("Actors")
                 actor_manager = ActorManager._instance
                 for npc in npc_data:
-                    self.NPCs[npc] = actor_manager.GetActor(npc)
+                    self.NPCs[npc] = copy.deepcopy(actor_manager.GetActor(npc))
         except FileNotFoundError:
             print("Error: The file 'actors.json' does not exist.")
         except json.JSONDecodeError:
@@ -90,6 +92,7 @@ class Environement:
                 if npc:
                     from Game import Game, GameState
                     CombatInterface._instance.InitCombat(Game._instance.PlayerActor, npc)
+                    print(self) 
                     return True
                 print(f"{RED}NPC {split_command[1]} not found{RESET}")
                 return True

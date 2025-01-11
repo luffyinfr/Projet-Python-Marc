@@ -1,9 +1,9 @@
 {
     "InventoryA": {
-        "ItemA": 1,
-        "ItemB": 1
+        "AttackItem": 1,
+        "HealItem": 1
     },
     "InventoryB": {
-        "ItemB": 2
+        "AttackItem": 2
     }
 }

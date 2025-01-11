@@ -1,6 +1,7 @@
 import json
 from enum import Enum
 from Actor import*
+from Utils import*
 
 class ObjectType(Enum):
     Healing = 1
@@ -28,8 +29,8 @@ class Item:
         return item_class(**kwargs)
     
 
-@Item.register("ItemA")
-class ItemA(Item):
+@Item.register("AttackItem")
+class AttackItem(Item):
     def __init__(self, name, damage):
         super().__init__(name)
         self.damage = damage
@@ -38,15 +39,18 @@ class ItemA(Item):
         return f"{self.name} (Damage: {self.damage})"
     
     def Use(self, caller):
-        from Game import Game
-        from Game import GameState
+        from Game import Game, GameState
         if(Game._instance.GameState == GameState.Battling):
-            #implement damaging here
-            pass
+            from CombatInterface import CombatInterface
+            CombatInterface._instance.AttackWithItem(caller, self)
+            return True
+        else:
+            print(f"{self.name} cannot be used in the current game state.")
+            return False
         
     
-@Item.register("ItemB")
-class ItemB(Item):
+@Item.register("HealItem")
+class HealItem(Item):
     def __init__(self, name, healing):
         super().__init__(name)
         self.healing = healing
@@ -57,8 +61,14 @@ class ItemB(Item):
     def Use(self, caller):
         from Game import Game
         from Game import GameState
-        if(Game._instance.GameState == GameState.Roaming):
+        if(Game._instance.GameState == GameState.Roaming or Game._instance.GameState == GameState.Battling):
+            print(f"{caller.name} used {self.name} to heal themselves by {self.healing} points.")
             caller.Heal(self.healing)
+            print(f"their health is now {RED}{caller.Health}{RESET}")
+            return True
+        else:
+            print(f"{self.name} cannot be used in the current game state.")
+            return False
     
 class ItemManager:
     # singleton pattern
