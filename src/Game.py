@@ -7,6 +7,7 @@ from enum import Enum
 import copy
 import Utils
 from CombatInterface import*
+from DialogueManager import DialogueManager
 
 class GameState(Enum):
     Roaming = 1
@@ -31,9 +32,10 @@ class Game:
             self.EnvironementManager = EnvironementManager()
             self.EnvironementManager.loadNpcRefs()
             self.CombatInterface = CombatInterface()
-            self.ActiveEnvironement = self.EnvironementManager.GetEnvironement("Forest")
+            self.ActiveEnvironement = self.EnvironementManager.GetEnvironement("Village")
             self.PlayerActor : Actor = copy.deepcopy(self.ActorManager.GetActor("Hero"))
             self.GameState = GameState.Roaming
+            self.DialogueManager = DialogueManager()
 
     def GameLoop(self):
         self.ActiveEnvironement.DisplayInfo()

@@ -85,8 +85,14 @@ class Environement:
             case "move":
                 return self.FindEnvironement(split_command[1])
             case "talk":
-                print(f"{RED}Command Not Implemented Yet!{RESET}")
-                return False
+                npc = self.FindNPC(split_command[1])
+                if npc and npc.dialogue != "":
+                    from DialogueManager import DialogueManager
+                    DialogueManager._instance.StartDialogue(npc, npc.dialogue)
+                    print(self) 
+                    return True
+                print(f"The {YELLOW}{npc.name}{RESET} does not seem to want to talk to you.")
+                return True
             case "attack":
                 npc = self.FindNPC(split_command[1])
                 if npc:

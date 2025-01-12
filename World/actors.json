@@ -25,6 +25,7 @@
     },
     "Vendor": {
         "Inventory":"InventoryA",
+        "Dialogue": "VendorDialogue",
         "Health": 100,
         "Attack": 10,
         "Defense": 0

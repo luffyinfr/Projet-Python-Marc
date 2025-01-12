@@ -1,0 +1,34 @@
+{
+    "VendorDialogue": [
+        {
+            "id": "1",
+            "text": "Hello, i am the vendor, unfortunately my features are not implemented yet.",
+            "options": [
+                {
+                    "text": "Oh",
+                    "targetNodeId": "2"
+                },
+                {
+                    "text": "Goodbye!",
+                    "targetNodeId": "3"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "text": "Yeah, sorry, im sure the developer will get to it soon (wink).",
+            "options": [
+                {
+                    "text": "Goodbye!",
+                    "targetNodeId": "3"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "text": "Goodbye!",
+            "options": [],
+            "event": "EndDialogue"
+        }
+    ]
+}

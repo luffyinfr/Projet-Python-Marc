@@ -10,6 +10,7 @@ class Actor:
         self.Attack = 0
         self.Defense : float = 0
         self.inventory = None
+        self.dialogue = ""
         self.load(name)
 
     def __str__(self):
@@ -32,6 +33,7 @@ class Actor:
                 self.MaxHealth = self.Health
                 self.Attack = actor_data.get("Attack", 0)  # Default to 0 if not found
                 self.Defense = actor_data.get("Defense", 0)  # Default to 0 if not found
+                self.dialogue = actor_data.get("Dialogue", "")
             else:
                 print(f"Actor '{name}' not found in the JSON file.")
         except FileNotFoundError:
