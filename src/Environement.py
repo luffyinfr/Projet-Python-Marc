@@ -107,7 +107,7 @@ class Environement:
     def DisplayCommands(self):
         print(f"{GREEN}environement info{RESET} - Displays the environement's information")
         print(f"{GREEN}move [location]{RESET} - Moves to the specified location if it is available")
-        print(f"{GREEN}talk [npc]{RESET} - Talks to the specified NPC {RED}NOT IMPLEMENTED YET{RESET}")
+        print(f"{GREEN}talk [npc]{RESET} - Talks to the specified NPC")
         print(f"{GREEN}attack [npc]{RESET} - Attacks the specified NPC")
 
     def FindEnvironement(self, envName):

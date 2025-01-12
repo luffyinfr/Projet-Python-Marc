@@ -1,3 +1,4 @@
+from time import sleep
 from Actor import Actor
 import json
 from Utils import*
@@ -40,12 +41,16 @@ class DialogueManager:
             print(self.activeNode)
             command = input("What would you like to do? ")
             self.ProcessCommands(command)
+            sleep(1)
 
     def DisplayCommands(self):
-        print("exit - Leave the conversation")
-        print("[dialogue number] - Select a dialogue option. Also works by typing the dialogue text.")
+        print(f"{GREEN}Exit{RESET} - Leave the conversation")
+        print(f"{GREEN}[dialogue number]{RESET} - Select a dialogue option. Also works by typing the dialogue text.")
 
     def ProcessCommands(self, command : str):
+        if command == "help":
+            self.DisplayCommands()
+            return
         if command == "exit":
             print(f"You have left the conversation with {YELLOW}{self.talkingActor.Name}{RESET}")
             from Game import Game, GameState

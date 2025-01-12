@@ -65,8 +65,10 @@ class CombatInterface:
                 from Game import Game
                 Game._instance.ActiveEnvironement.RemoveNPC(target.Name)
                 print(f"You have won the battle!")
+                sleep(1)
             else:
                 print(f"You have been defeated")
+                sleep(1)
             from Game import Game, GameState
             Game._instance.GameState = GameState.Roaming
 

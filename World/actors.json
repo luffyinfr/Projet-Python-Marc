@@ -7,6 +7,7 @@
     },
     "Villain": {
         "Inventory":"InventoryA",
+        "Dialogue": "VillainDialogue",
         "Health": 120,
         "Attack": 20,
         "Defense": 0.25
@@ -19,6 +20,7 @@
     },
     "Bunny": {
         "Inventory":"InventoryA",
+        "Dialogue": "BunnyDialogue",
         "Health": 10,
         "Attack": 1,
         "Defense": 0
@@ -32,6 +34,7 @@
     },
     "Fish": {
         "Inventory":"InventoryA",
+        "Dialogue": "FishDialogue",
         "Health": 1,
         "Attack": 1,
         "Defense": 0
